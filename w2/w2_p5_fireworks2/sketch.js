@@ -17,12 +17,16 @@ function setup() {
 }
 
 function draw() {
-  background(0, 10);
+  background(0);
   for (var i = 0; i < circles.length; i++) {
     var c = circles[i];
     c.update(mode);
-    //c.applyGravity(0.1);
+    //c.check();
     c.display(mode);
+    
+    if(c.isDead){
+      circles.splice(i,1);
+    }
   }
 }
 
@@ -45,6 +49,7 @@ function mouseReleased() {
   mode = 0;
    for (var i = 0; i < circles.length; i++) {
     var c = circles[i];
+    c.count = 0;
     c.isExploded = true;
     c.explode();
   }
@@ -58,15 +63,17 @@ class Circle {
     this.vel = createVector(0, _velY);
 
     this.isExploded = false;
-
+    this.isDead = false;
+    
     this.angle = random(PI * 2);
     this.angleVel = random(0.05, 0.01);
     this.count = 0;
 
     this.dia = random(5, 10);
-
+    this.circleFill = 255;
   }
   update(mode) {
+    
     this.updateAcc(mode);
     this.vel.add(this.acc);
     this.position.add(this.vel);
@@ -75,10 +82,9 @@ class Circle {
       this.vel.mult(0.9);
       this.count++;
     }
+    //this.circleFill = this.circleFill -1;
   }
-  applyGravity(g) {
-    this.vel.y += g;
-  }
+  
   updateAcc(mode) {
     if (mode == 0) {
       this.acc = createVector(0, 0.1);
@@ -96,18 +102,23 @@ class Circle {
     this.vel.x = random(-10, 10);
     this.vel.y = random(-10, 10);
   }
+  check(){
+    if(this.circleFill == 0){
+      this.isDead = true;
+    }
+  }
   display(mode) {
     if (mode == 0) {
       push();
       translate(this.position.x, this.position.y);
       rotate(frameCount * this.angleVel + this.angle);
       noStroke();
-      fill(255, 150);
+      fill(this.circleFill);
       ellipse(this.count, 0, this.dia, this.dia);
       pop();
     } else if (mode == 1) {
       noStroke();
-      fill(255, 150);
+      fill(this.circleFill);
       ellipse(this.position.x, this.position.y, this.dia, this.dia);
     }
   }
