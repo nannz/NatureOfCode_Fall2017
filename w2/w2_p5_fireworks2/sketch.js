@@ -8,6 +8,7 @@ var mode;
 function setup() {
   createCanvas(600, 600);
   background(0);
+  colorMode(HSB, 255);
   mode = 0;
 
   for (var i = 0; i < numOfFire; i++) {
@@ -17,11 +18,11 @@ function setup() {
 }
 
 function draw() {
-  background(0);
+  background(0,10);
   for (var i = 0; i < circles.length; i++) {
     var c = circles[i];
     c.update(mode);
-    //c.check();
+    c.check();
     c.display(mode);
     
     if(c.isDead){
@@ -54,6 +55,14 @@ function mouseReleased() {
     c.explode();
   }
 }
+function mousePressed(){
+  var newColor = color(random(255),random(0,100),255); 
+  for (var i = 0; i < circles.length; i++) {
+    var c = circles[i];
+    c.circleFill = newColor;
+  }
+}
+
 
 class Circle {
 
@@ -69,8 +78,9 @@ class Circle {
     this.angleVel = random(0.05, 0.01);
     this.count = 0;
 
-    this.dia = random(5, 10);
-    this.circleFill = 255;
+    this.dia = random(5.0, 10.0);
+    this.circleFill = color(0,0,255); //hsb
+    this.trans = 255;
   }
   update(mode) {
     
@@ -80,9 +90,13 @@ class Circle {
 
     if (this.isExploded) {
       this.vel.mult(0.9);
+      this.dia = this.dia - 0.01;
       this.count++;
     }
-    //this.circleFill = this.circleFill -1;
+    // if (this.isExploded && mode == 1){
+    //   this.dia = this.dia - 0.01;
+    // }
+    //this.trans = this.trans -1;
   }
   
   updateAcc(mode) {
@@ -103,9 +117,15 @@ class Circle {
     this.vel.y = random(-10, 10);
   }
   check(){
-    if(this.circleFill == 0){
+    if(this.trans == 0){
       this.isDead = true;
     }
+    if(this.dia == 0.1){
+      this.isDead = true; 
+      print("dia = 0.1");
+      this.dia = 0.1;
+    }
+    
   }
   display(mode) {
     if (mode == 0) {
@@ -114,7 +134,8 @@ class Circle {
       rotate(frameCount * this.angleVel + this.angle);
       noStroke();
       fill(this.circleFill);
-      ellipse(this.count, 0, this.dia, this.dia);
+       ellipse(this.count, 0, this.dia, this.dia);
+      //ellipse(this.count, 0, -10,-10);
       pop();
     } else if (mode == 1) {
       noStroke();
