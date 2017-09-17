@@ -1,3 +1,7 @@
+//他很卡！！！
+
+
+
 var balls = [];
 var numOfBall = 10;
 var gravity;
