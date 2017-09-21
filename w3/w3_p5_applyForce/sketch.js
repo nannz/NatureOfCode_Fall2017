@@ -8,6 +8,8 @@ var gravity;
 var wind;
 var mode;
 
+var liquid;
+
 var c = 0.01; //摩擦系数
 var normal = 1; //垂直抗力
 
@@ -19,6 +21,8 @@ function setup() {
     var myBall = new Ball(random(0, width), height / 2);
     balls[i] = myBall;
   }
+  
+  liquid = new Liquid(0, height/2, width, height/2, 0.1);
 }
 
 

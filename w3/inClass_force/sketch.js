@@ -5,8 +5,14 @@
 // acc = force/mass
 //careful to calculate gravity. should multi mass
 
-var c;
+//next class will cover attraction
 var circles = [];
+
+var CO_RESTITUTION = 0.9; //摩擦系数
+var normal = 1; //垂直抗力
+
+var GRAVITY_MAG = 1;
+var FRICTION_MAG = 2;
 
 function setup() {
   createCanvas(600, 600);
@@ -22,13 +28,19 @@ function draw() {
   background(0);
   for (var i = 0; i < circles.length; i++) {
     var c = circles[i];
-    var gravity = createVector(0, 1);
+    var gravity = createVector(0, GRAVITY_MAG);
     gravity.mult(c.mass);
     c.applyForce(gravity);
     
     var wind = createVector(1,0);
     c.applyForce(wind);
 
+    var friction = p5.Vector.mult(c.vel,-1);
+    friction.normalize();
+    friction.mult(FRICTION_MAG);
+    friction.limit(c.vel.mag());
+    c.applyForce(friction);
+    
     c.update();
     c.bounce();
     c.display();
@@ -83,11 +95,11 @@ class Circle {
   bounce() {
     if (this.pos.x < 0 || this.pos.x > width) {
       this.vel.x = -this.vel.x;
-      this.vel.mult(0.8);
+      this.vel.mult(CO_RESTITUTION);//乘以摩擦力。。
     }
     if (this.pos.y < 0 || this.pos.y > height) {
       this.vel.y = -this.vel.y;
-      this.vel.mult(0.8);
+      this.vel.mult(CO_RESTITUTION);
     }
     this.pos.x = constrain(this.pos.x, 0, width);
     this.pos.y = constrain(this.pos.y, 0, height);
