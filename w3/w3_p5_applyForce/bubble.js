@@ -19,7 +19,7 @@ class Bubble{
   
   applyForce(force){
     force.div(this.mass);
-    this.acc.add(force);
+    this.acceleration.add(force);
   }
   
   isOutLiquid(liquid){

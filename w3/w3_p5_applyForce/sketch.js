@@ -16,6 +16,7 @@ var FRICTION_MAG = 0.01;
 var ballColor;
 
 var bubbles = [];
+var UPTHRUST_MAG = 0.1;
 
 function setup() {
   createCanvas(500, 500);
@@ -70,6 +71,12 @@ function draw() {
     if(bubbles.length >0){
       for(var i = 0; i < bubbles.length; i++){
         var bubble = bubbles[i];
+        
+        var upthrust = createVector(0,-1);
+        upthrust.mult(UPTHRUST_MAG);
+        upthrust.limit(ball.speed.mag());
+        bubble.applyForce(upthrust);
+        
         bubble.update();
         bubble.display();
         //print("displayed!");
