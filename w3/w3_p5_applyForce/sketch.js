@@ -23,7 +23,7 @@ function setup() {
   colorMode(HSB, 255);
   ballColor = 0; //black ball
   //gravity = createVector(0, 0.1);
-  wind = createVector(200,0);
+  wind = createVector(150,0);
   for (var i = 0; i < numOfBall; i++) {
     var myBall = new Ball(50, 50,ballColor);
     balls[i] = myBall;
@@ -78,8 +78,13 @@ function draw() {
         bubble.applyForce(upthrust);
         
         bubble.update();
+        //print(bubble.isOutLiquid(liquid));
+        if(bubble.isOutLiquid(liquid)){
+          bubbles.splice(bubble);
+        }
+        
         bubble.display();
-        //print("displayed!");
+      
       }
     }
   }
