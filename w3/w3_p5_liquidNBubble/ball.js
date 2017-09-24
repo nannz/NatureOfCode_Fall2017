@@ -13,6 +13,7 @@ class Ball {
     
     this.isInL = false;
     this.wasInL = false;
+    this.bubbles = [];
   }
 
 

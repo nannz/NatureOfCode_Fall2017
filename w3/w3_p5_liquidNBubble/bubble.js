@@ -29,7 +29,7 @@ class Bubble{
     var l_TopY = liquid.y - liquid.h * 0.5;
     var l_BottomY = liquid.y + liquid.h * 0.5;
     
-    if((this.position.x - this.r )> l_LeftX && (this.position.x+this.r)<l_RightX && (this.position.y+this.r)>l_TopY && (this.position.y-this.r)<l_BottomY){
+    if((this.position.x - this.r )> l_LeftX && (this.position.x+this.r)<l_RightX && (this.position.y-this.r)>l_TopY && (this.position.y+this.r)<l_BottomY){
       this.isOutL = false;
     }else{
       this.isOutL = true;
