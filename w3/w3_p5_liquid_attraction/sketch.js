@@ -35,6 +35,16 @@ function setup() {
 
 }
 
+function mouseClicked(){
+  print("clicked!");
+  for(var i = 0; i < balls.length; i++){
+    var ball = balls[i];
+    
+    var upForce = createVector(0,-10);
+    ball.applyForce(upForce);
+  }
+}
+
 
 function draw() {
 
@@ -67,6 +77,9 @@ function draw() {
       bubbles.push(bubble);
     } else {
       ballColor = 0;
+      
+      fill(0);
+      text("Attraction!",width-100,10);
       //applyAttraction when not in liquid
       for (var j = 0; j < balls.length; j++) {
         if (i != j) {
@@ -85,6 +98,7 @@ function draw() {
 
   //start bubble
   if (bubbles.length > 0) {
+    //print("1");
     for (var i = 0; i < bubbles.length; i++) {
       var bubble = bubbles[i];
 
@@ -94,16 +108,18 @@ function draw() {
       bubble.applyForce(upthrust);
 
       bubble.update();
-      bubble.display();
-      if (bubble.isOutLiquid(liquid)) {
-        print(i);
-        //bubbles.splice(bubble);
-      }
-
       
-
+      if (bubble.isOutLiquid(liquid)) {
+        //print(i);
+        //bubbles.splice(bubble);
+        bubbles.splice(i,1);
+      }
+      bubble.display();
     }
+  }else if(bubbles.length == 0){
+    //print("0");
   }
+  
   // print(bubbles.length);
 
 }

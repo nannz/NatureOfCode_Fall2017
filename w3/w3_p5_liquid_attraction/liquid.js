@@ -13,7 +13,7 @@ class Liquid{
     push();
     translate(this.x,this.y);
     noStroke();
-    fill(175,50);
+    fill(0);
     rectMode(CENTER);
     rect(0,0,this.w,this.h);
     pop();
