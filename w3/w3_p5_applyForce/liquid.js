@@ -10,8 +10,12 @@ class Liquid{
   }
   
   display() {
+    push();
+    translate(this.x,this.y);
     noStroke();
-    fill(175);
-    rect(x,y,w,h);
+    fill(175,50);
+    rectMode(CENTER);
+    rect(0,0,this.w,this.h);
+    pop();
   }
 }

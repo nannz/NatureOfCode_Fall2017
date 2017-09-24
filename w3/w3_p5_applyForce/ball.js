@@ -36,30 +36,7 @@ class Ball {
       this.speed.y = - this.speed.y;
       this.speed.mult(CO_RESTITUTION);
     }
-    /* original codes
-    if (this.position.x < this.r) {
-      this.updateFill();
-      //this.position.x = this.r; //in the window keep x
-      this.speed.x = -this.speed.x;
-      this.speed.mult(CO_RESTITUTION);
-    } else if (this.position.x > width - this.r) {
-      this.updateFill();
-      //this.position.x = width - this.r;
-      this.speed.x = -this.speed.x;
-      this.speed.mult(CO_RESTITUTION);
-    }
-    if (this.position.y < this.r) {
-      this.updateFill();
-      //this.position.y = this.r;
-      this.speed.y = -this.speed.y;
-      this.speed.mult(CO_RESTITUTION);
-    } else if (this.position.y > height - this.r) {
-      this.updateFill();
-      //this.position.y = height - this.r;
-      this.speed.y = -this.speed.y;
-      this.speed.mult(CO_RESTITUTION);
-    }
-    */
+    
     this.position.x = constrain(this.position.x, 0, width-this.r);
     this.position.y = constrain(this.position.y, 0, height-this.r);
   };
@@ -107,5 +84,9 @@ class Ball {
     drag.normalize();
     drag.mult(dragMag);
     return drag
+  }
+  
+  isInliquid(){
+    
   }
 }

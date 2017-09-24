@@ -12,7 +12,7 @@ var liquid;
 
 var CO_RESTITUTION = 0.98; //摩擦系数
 var normal = 1; //垂直抗力
-var GRAVITY_MAG = 0.5;
+var GRAVITY_MAG = 0.3;
 var FRICTION_MAG = 0.01;
 
 function setup() {
@@ -24,7 +24,7 @@ function setup() {
     balls[i] = myBall;
   }
   
-  liquid = new Liquid(0, height/2, width, height/2, 0.1);
+  liquid = new Liquid(width/2, height/2, 100, 100, 0.1);
 }
 
 
@@ -48,6 +48,7 @@ function draw() {
     ball.checkEdges();
     ball.display();
   }
-
+  
+  liquid.display();
 }
 
