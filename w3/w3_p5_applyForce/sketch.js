@@ -1,24 +1,26 @@
-//他很卡！！！
+
 "use strict";
 
 
 var balls = [];
-var numOfBall = 1;
+var numOfBall = 10;
 var gravity;
 var wind;
 var mode;
 
 var liquid;
 
-var c = 0.01; //摩擦系数
+var CO_RESTITUTION = 0.98; //摩擦系数
 var normal = 1; //垂直抗力
+var GRAVITY_MAG = 0.5;
+var FRICTION_MAG = 0.01;
 
 function setup() {
   createCanvas(500, 600);
-  gravity = createVector(0, 0.1);
-  wind = createVector(0.1,0);
+  //gravity = createVector(0, 0.1);
+  wind = createVector(100,0);
   for (var i = 0; i < numOfBall; i++) {
-    var myBall = new Ball(random(0, width), height / 2);
+    var myBall = new Ball(50, 50);
     balls[i] = myBall;
   }
   
@@ -31,17 +33,20 @@ function draw() {
   background(255);
   
   for (var i = 0; i < balls.length; i++) {
-    //为什么这么这么卡!!!
+    var ball = balls[i];
     
-    var friction = balls[i].getFriction(c, normal);
-    //print(friction.toString());
-
-    balls[i].applyForce(friction);
-    balls[i].applyForce(wind);
-    balls[i].applyForce(gravity);
-    balls[i].updatePosition();
-    balls[i].checkEdges();
-    balls[i].display();
+    var friction = ball.getFriction(FRICTION_MAG, normal);
+    ball.applyForce(friction);
+    
+    ball.applyForce(wind);
+    
+    var gravity = createVector(0,GRAVITY_MAG);
+    gravity.mult(ball.mass)
+    ball.applyForce(gravity);
+    
+    ball.updatePosition();
+    ball.checkEdges();
+    ball.display();
   }
 
 }
