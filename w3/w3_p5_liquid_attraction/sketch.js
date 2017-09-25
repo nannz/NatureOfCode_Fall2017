@@ -20,6 +20,11 @@ var UPTHRUST_MAG = 0.01;
 var BUBBLE_MAX = 15;
 var ATTRACTION_MAG = 0.6;
 
+var myFont;
+function preload() {
+  myFont = loadFont('assets/AtikFont.ttf');
+}
+
 function setup() {
   createCanvas(500, 500);
   colorMode(HSB, 255);
@@ -45,10 +50,34 @@ function mouseClicked(){
   }
 }
 
+function mouseDragged(){
+  var mouseVector = createVector(mouseX, mouseY);
+  //print("dragging!");
+  for(var i = 0; i < balls.length; i++){
+    var ball = balls[i];
+    
+    var mouseForce = p5.Vector.sub(ball.position, mouseVector);
+    var distance = mouseForce.mag();
+    //print(i + " " + distance);
+    distance = constrain(distance,ball.r,2000.0);
+    mouseForce.normalize();
+    
+    var strength = (ATTRACTION_MAG * ball.mass * 1000)/(distance * distance);
+    mouseForce.mult(strength * -1);
+    
+    ball.applyForce(mouseForce);
+  }
+}
+
 
 function draw() {
 
   background(255);
+  
+  fill(0);
+  textFont(myFont);
+  text("Try clicking and dragging ", 10,20);
+  
   liquid.display();
 
   for (var i = 0; i < balls.length; i++) {
@@ -68,19 +97,11 @@ function draw() {
       ball.applyDrag(liquid);
       
       //add bubble
-      //limit the number of bubbles
-      //if (bubbles.length <= BUBBLE_MAX) {
-        // var bubble = new Bubble(ball.position.x, ball.position.y);
-        // bubbles.push(bubble);
-      //}
       var bubble = new Bubble(ball.position.x, ball.position.y);
       bubbles.push(bubble);
     } else {
       ballColor = 0;
       
-      fill(0);
-      text("Attraction!",width-100,10);
-      //applyAttraction when not in liquid
       for (var j = 0; j < balls.length; j++) {
         if (i != j) {
           var otherBall = balls[j];
