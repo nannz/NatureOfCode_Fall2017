@@ -17,12 +17,10 @@ Used:
 6. mouse Interaction
 
 Problem & Question:
-1. I want the liquid to be look like real liquid. But I am struggling on how to make it move at the same time i can
-easy check if the ball is in the liquid.
-2. [Solved]Tricky part on for loop. When one of the bubbles of a ball is out of the liquid, the whole set of the 
-bubbles was spliced from the bubbles array. I figured why later. It is because I didn't take a careful look on for loop setitng. 
+1. I want the liquid to look like real liquid. But I am struggling on how to make it move at the same time I can easily check if the ball is in the liquid.
+2.[Solved]Tricky part on for loop. When one of the bubbles of a ball is out of the liquid, the whole set of the 
+bubbles were spliced from the bubbles array. I figured why later. It is because I didn't take a careful look on for loop settings. 
 */
-
 
 
 
