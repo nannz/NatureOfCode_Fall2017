@@ -1,14 +1,17 @@
 "use strict";
 var p;
+var a;
 var particles = [];
 var refParticles = [];
 var STEP = 0.1;
-var CO_ATTRACTION = 0.0001;
+var CO_ATTRACTION = 0.001;
 
 var scl = 10; //scale
 var cols, rows;
 
 var dirField = [];
+
+var pTheta = 0.0;
 
 function setup() {
   createCanvas(500, 500);
@@ -19,32 +22,20 @@ function setup() {
 
   //create particles
   //p = new Particle().setPos(50, 50);
-  for (var x = 0; x < cols; x ++) {
-    var p = new Particle().setPos(x * scl, 1);
-    particles.push(p);
-  }
-  for(var y = 0; y < rows; y++){
-    var p = new Particle().setPos(1, y * scl);
-    particles.push(p);
-  }
-  for (var x = 0; x < cols; x ++) {
-    var p = new Particle().setPos(x * scl, height-1);
-    particles.push(p);
-  }
-  for(var y = 0; y < rows; y++){
-    var p = new Particle().setPos(width-1, y * scl);
+  for (var x = floor(cols / 2); x < cols; x++) {
+    var p = new Particle().setPos(x * scl, height - 1);
     particles.push(p);
   }
 
   //create objects of the infinite loop symbol
   createSymbol();
-  //drawSymbol
-  //drawSymbol();
 
+  //create agent
+  a = new Agent(0.0);
 }
 
 function draw() {
-  background(0,5);
+  background(0, 5);
 
   //grids
   for (var y = 0; y < rows; y++) {
@@ -65,24 +56,12 @@ function draw() {
       //检查是不是在column里
       var v = createVector(0, 0);
       var closestPoint = refParticles[gDestinationPointIndex];
-      
       var v1 = p5.Vector.sub(closestPoint.pos, gridPos);
-      //var v2 = p5.Vector.sub(closestPoint.nextPos, gridPos);
-      v = p5.Vector.add(v1,closestPoint.dir*2);
-
-
-      
-      if(closestPoint.pos.x > x*scl && closestPoint.pos.x <= (x * scl + scl) 
-        && closestPoint.pos.y > y*scl && closestPoint.pos.y <= (y * scl + scl)){
+      v = p5.Vector.add(v1, closestPoint.dir * 2);
+      if (closestPoint.pos.x > x * scl && closestPoint.pos.x <= (x * scl + scl) && closestPoint.pos.y > y * scl && closestPoint.pos.y <= (y * scl + scl)) {
         //if in the column
         v = closestPoint.dir;
-        //v.mult(0);
       }
-      // }else{
-      //   v = p5.Vector.sub(closestPoint.pos, gridPos);
-      // } 
-      
-
       v.normalize();
       //v.mult(10);
       dirField[index] = v;
@@ -100,14 +79,16 @@ function draw() {
 
   //drawSymbol
   drawSymbol();
+  a.display();
+  a.update();
 
   //particle
   for (var i = 0; i < particles.length; i++) {
     var p = particles[i];
-    p.follow(dirField);
-    p.symbolAttraction(refParticles);
+    //p.follow(dirField);
+    p.applyAttraction(a.pos.x, a.pos.y);
     p.update();
-    //p.display();
+    p.display();
     p.edges();
   }
 
@@ -140,22 +121,18 @@ function createSymbol() {
   }
 }
 
-function drawSymbol(){
+function drawSymbol() {
   //test point
   var scalP = 2 / (3 - cos(2 * (PI / 4 * 7))) * 150;
   var xP = scalP * cos((PI / 4 * 7)) + width / 2; //点移动到中间去
   var yP = scalP * sin(2 * (PI / 4 * 7)) / 2 + height / 2; //点移动到中间去
   push();
-  translate(xP,yP);
-  fill(255,0,0);
-  text("7PI/4", 0,0);
-  ellipse(0,0,10,10);
+  translate(xP, yP);
+  fill(255, 0, 0);
+  text("7PI/4", 0, 0);
+  ellipse(0, 0, 10, 10);
   pop();
-  
-  
-  
-  
-  
+
   for (var i = 0; i < refParticles.length; i++) {
     var ref = refParticles[i];
     //画一画测试一下
