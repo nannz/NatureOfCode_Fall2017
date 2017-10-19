@@ -40,7 +40,7 @@ class Particle {
     var y = floor(this.pos.y / scl);
     var index = x + y * cols;
     var force = vectors[index];
-    force.mult(0.05);
+    force.mult(0.005);
     this.applyForce(force);
   }
   
@@ -55,14 +55,14 @@ class Particle {
         destinationPointIndex = i;
       }
     }
-    this.applyAttraction(refParticles[destinationPointIndex]);
+    //this.applyAttraction(refParticles[destinationPointIndex]);
   }
   update() {
     this.vel.add(this.acc);
     this.pos.add(this.vel);
     this.acc.mult(0);
     
-    //this.vel.limit(10);
+    this.vel.limit(10);
   }
 
   display() {

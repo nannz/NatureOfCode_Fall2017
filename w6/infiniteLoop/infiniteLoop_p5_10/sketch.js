@@ -72,7 +72,7 @@ function draw() {
       stroke(200);
       strokeWeight(0.1);
       rotate(v.heading());
-      line(0, 0, scl, 0);
+      //line(0, 0, scl, 0);
       pop();
     }
   }

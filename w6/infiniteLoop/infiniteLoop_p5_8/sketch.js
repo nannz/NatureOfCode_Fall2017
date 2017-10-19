@@ -93,13 +93,13 @@ function draw() {
       stroke(70);
       strokeWeight(0.1);
       rotate(v.heading());
-      line(0, 0, scl, 0);
+      //line(0, 0, scl, 0);
       pop();
     }
   }
 
   //drawSymbol
-  drawSymbol();
+  //drawSymbol();
 
   //particle
   for (var i = 0; i < particles.length; i++) {
