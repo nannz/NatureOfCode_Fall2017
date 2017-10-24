@@ -93,7 +93,7 @@ function draw() {
       stroke(70);
       strokeWeight(0.1);
       rotate(v.heading());
-      //line(0, 0, scl, 0);
+      line(0, 0, scl, 0);
       pop();
     }
   }
@@ -125,8 +125,8 @@ function createSymbol() {
 
     //next vertex
     var scalNext = 2 / (3 - cos(2 * (theta + STEP))) * 150;
-    var xNext = scal * cos(theta + STEP) + width / 2; //点移动到中间去
-    var yNext = scal * sin(2 * (theta + STEP)) / 2 + height / 2; //点移动到中间去
+    var xNext = scalNext * cos(theta + STEP) + width / 2; //点移动到中间去
+    var yNext = scalNext * sin(2 * (theta + STEP)) / 2 + height / 2; //点移动到中间去
 
     var thisPoint = createVector(x, y);
     var nextPoint = createVector(xNext, yNext);

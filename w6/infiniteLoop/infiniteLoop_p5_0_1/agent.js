@@ -22,6 +22,7 @@ class Agent {
 
   //   this.pos = createVector(x, y);
   // }
+  
   update() {
     var scal = 2 / (3 - cos(2 * this.theta )) * 150;
     var x = scal * cos(this.theta ) + width / 2; //点移动到中间去
