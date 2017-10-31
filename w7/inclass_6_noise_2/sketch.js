@@ -6,7 +6,7 @@ function setup() {
 function draw() {
   background(0);
 
-  var resolution = 5;
+  var resolution = 25;
   for (var y = 0; y < height; y += resolution) {
     for (var x = 0; x < width; x += resolution) {
       var sinVal, freq1,freq2,amp;
