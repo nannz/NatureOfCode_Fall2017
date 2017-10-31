@@ -21,9 +21,11 @@ class Particle{
     this.colour = color(r,g,b);
     return this;
   }
-  
+  getDist(vector){
+    return p5.Vector.dist(this.pos, vector);
+  }
   checkDist(vector){
-    if(p5.Vector.dist(this.pos, vector) <= 100){
+    if(p5.Vector.dist(this.pos, vector) <= DIST){
       return true;
     }else{
       return false;
