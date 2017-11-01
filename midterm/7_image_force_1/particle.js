@@ -11,6 +11,7 @@ class Particle{
     
     this.colour = 0;
     
+    this.isExploded = false;
   }
   
   setPos(x,y,z){
@@ -41,9 +42,21 @@ class Particle{
     this.acc.add(force);
   }
   
+  explode(){
+    this.isExploded = true;
+    //can have an initial vel there
+    //...
+    var explodeForce = createVector(random(0,10),random(0,10),random(0,10));
+    this.vel = explodeForce;
+  }
   
   update(){
     this.vel.add(this.acc);
+    if(this.isExploded){
+      this.vel.mult(0.9);
+      this.count ++;
+    }
+    
     this.pos.add(this.vel);
     this.acc.mult(0);
   }
