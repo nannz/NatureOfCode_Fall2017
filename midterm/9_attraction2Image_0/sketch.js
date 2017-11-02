@@ -1,7 +1,12 @@
+//img2 load and createVectors don't wrk
+
+
 "use strict";
-var img;
+var img1, img2;
 
 var particles = [];
+var nextImg = []; //pos & size
+
 var resolution = 8;
 var mousePos;
 var DIST = 100;
@@ -11,23 +16,22 @@ var isPressed = false;
 var wind;
 
 function preload() {
-  img = loadImage("assets/cruz_small.jpg");
+  img1 = loadImage("assets/cruz_small.jpg");
+  img2 = loadImage("assets/edward.jpg");
 }
 
 function setup() {
-  //createCanvas(1200, 1530, WEBGL);
   createCanvas(600, 765, WEBGL);
-  // /canvas.parent('sketch-holder');
-  
+
   pixelDensity(1);
-  //noStroke();
-  createParticles();
-  wind = createVector(random(-2, 2), random(-2, 2), random(-10, 10));
+  createParticles(); //for this one and the next one
+  wind = createVector(random(-2, 2), random(-2, 2), random(9, 10));
   background(255);
+
+  //print(nextImg[0].pos.x);
 }
 
 function draw() {
-  background(255);
 
   //rotateX(-PI / 8);
   translate(0, 0, -100);
@@ -50,12 +54,19 @@ function draw() {
     }
 
     if (p.isAttracted) {
-      // var wind = createVector(random(-2, 2), random(-2, 2), random(-2, 2));
       wind.mult(p.mass);
       p.applyForce(wind);
       p.applyAttraction(createVector(0, 0, 0));
-      //drawSphere(0,0,0,5);
     }
+
+    if (p.nextImg) {
+      //p.vel.mult(0);
+      p.size = nextImg[i].size;
+      var force = p5.Vector.sub(nextImg[i].pos, p.pos);
+      force.mult(0.2);
+      p.applyForce(force);
+    }
+    //checkNextFinished -> isExploded = false;
 
     p.update();
     p.display();
@@ -73,27 +84,46 @@ function drawSphere(x, y, z, s) { //s for size
 }
 
 function createParticles() {
-  img.loadPixels();
+  img1.loadPixels();
+
+  var bright1;
+  var r1, g1, b1;
   for (var y = -height / 2; y < height / 2; y += resolution) {
     for (var x = -width / 2; x < width / 2; x += resolution) {
       var newX = x + width / 2;
       var newY = y + height / 2;
+      var imgIndex1 = (newX + newY * width) * 4;
 
-      var imgIndex = (newX + newY * width) * 4;
-      var r = img.pixels[imgIndex + 0];
-      var g = img.pixels[imgIndex + 1];
-      var b = img.pixels[imgIndex + 2];
-      var colour = color(r, g, b);
-      var bright = (r + g + b) / 3;
-      bright = 255 - bright;
-      var pSize = map(bright, 0, 255, 0.1, 2.0);
-
-      var zPos = map(bright, 0, 255, 1, 10);
-
-      var index = newX / resolution + newY / resolution * width / resolution; //+ newY % resolution * floor(width/resolution) ;
-      //print(index);
-      var p = new Particle().setPos(x, y, zPos).setSize(pSize);
+      r1 = img1.pixels[imgIndex1 + 0];
+      g1 = img1.pixels[imgIndex1 + 1];
+      b1 = img1.pixels[imgIndex1 + 2];
+      bright1 = (r1 + g1 + b1) / 3;
+      bright1 = 255 - bright1;
+      var pSize1 = map(bright1, 0, 255, 0.1, 2.0);
+      var zPos1 = map(bright1, 0, 255, 1, 10);
+      var p = new Particle().setPos(x, y, zPos1).setSize(pSize1);
       particles.push(p);
+    }
+  }
+
+  img2.loadPixels();
+  var bright2;
+  var r2, g2, b2;
+  for (var y = -height / 2; y < height / 2; y += resolution) {
+    for (var x = -width / 2; x < width / 2; x += resolution) {
+      var newX = x + width / 2;
+      var newY = y + height / 2;
+      var imgIndex2 = (newX + newY * width) * 4;
+
+      r2 = img2.pixels[imgIndex2 + 0];
+      g2 = img2.pixels[imgIndex2 + 1];
+      b2 = img2.pixels[imgIndex2 + 2];
+      bright2 = (r2 + g2 + b2) / 3;
+      bright2 = 255 - bright2;
+      var pSize2 = map(bright2, 0, 255, 0.1, 2.0);
+      var zPos2 = map(bright2, 0, 255, 1, 10);
+      var imgObject = new NextImage().setPos(x, y, zPos2).setSize(pSize2);
+      nextImg.push(imgObject);
     }
   }
 }
@@ -130,9 +160,21 @@ function keyTyped() {
       p.isAttracted = true;
     }
   }
-  
-  if(key == 's'){
+
+  if (key == 's') {
     //save the canvas
-    saveCanvas('try','jpg');
+    saveCanvas('try', 'jpg');
+  }
+
+  if (key == 'a') {
+    //stop the attraction to center
+    //for each particle, attract to the next img particles' pos, 
+    //for each particle, size go to the next img particles' size
+    for (var i = 0; i < particles.length; i++) {
+      var p = particles[i];
+      p.isExploded = true;//false;
+      p.isAttracted = false;
+      p.nextImg = true;
+    }
   }
 }

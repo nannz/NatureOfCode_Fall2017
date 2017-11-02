@@ -12,6 +12,8 @@ class Particle{
     this.colour = 0;
     
     this.isExploded = false;
+    this.isAttracted = false;
+    this.nextImage = false;
   }
   
   setPos(x,y,z){
@@ -50,17 +52,20 @@ class Particle{
     this.vel = force;
   }
   
+  applyAttraction(attraction){
+    var dir = attraction.sub(this.pos);
+    dir.normalize();
+    dir.mult(0.1 * this.mass);
+    
+    this.applyForce(dir);
+  }
+
   update(){
-    if(this.isExploded){
+    if(this.isExploded || this.nextImg){
       this.vel.mult(0.7);
-      this.applyForce(createVector(0,0,-1));
+      //this.applyForce(createVector(0,0,-1));
     }
     this.vel.add(this.acc);
-    if(this.vel.mag() == 0){
-      this.vel = createVector(0,0,0);
-    }
-    
-    
     this.pos.add(this.vel);
     this.acc.mult(0);
   }
@@ -70,6 +75,7 @@ class Particle{
     translate(this.pos.x,this.pos.y,this.pos.z);
     fill(this.colour);
     sphere(this.size);
+    //box(this.size);
     pop();
   }
 }

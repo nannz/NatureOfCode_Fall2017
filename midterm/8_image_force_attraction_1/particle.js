@@ -74,6 +74,7 @@ class Particle{
     translate(this.pos.x,this.pos.y,this.pos.z);
     fill(this.colour);
     sphere(this.size);
+    //box(this.size);
     pop();
   }
 }
