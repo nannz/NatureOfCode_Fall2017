@@ -23,20 +23,18 @@ function draw() {
 
   for(var i = 0; i < particles.length; i++){
     var p = particles[i];
-    if(mouseStatus == true){
-      if(p.checkDist(mousePos)){
-        var distance = p.getDist(mousePos);
-        var angle = map(distance, 0, DIST, -PI / 2, PI / 2);
-        var sinVal = sin(angle) * amp; //amp = -60
-        var noiseVal = map(noise(sinVal), 0, 1, 0.8, 1.5);
-        var velZ = noiseVal * (sinVal - amp);
-        var noiseForce = createVector(0,0,velZ);
-        p.explode(noiseForce);
-        
-      }
-    }
+    // if(mouseStatus == true){
+    //   if(p.checkDist(mousePos)){
+    //     var distance = p.getDist(mousePos);
+    //     var angle = map(distance, 0, DIST, -PI / 2, PI / 2);
+    //     var sinVal = sin(angle) * amp; //amp = -60
+    //     var noiseVal = map(noise(sinVal), 0, 1, 0.8, 1.5);
+    //     var velZ = noiseVal * (sinVal - amp);
+    //     var noiseForce = createVector(0,0,velZ);
+    //     p.explode(noiseForce);
+    //   }
+    // }
     //mouseStatus = false;
-    
     p.update();
     p.display();
   }
@@ -67,5 +65,19 @@ function createParticles() {
 function mouseReleased() {
   mouseCount ++;
   mouseStatus = true; //now canot go back to false only detact the first mouse release
-  
+  var amp = -60;
+  mousePos = createVector(mouseX - width / 2, mouseY - height / 2, 0); //z = 0 for now. 
+  for(var i = 0; i < particles.length; i++){
+    var p = particles[i];
+    if(p.checkDist(mousePos)){
+        var distance = p.getDist(mousePos);
+        var angle = map(distance, 0, DIST, -PI / 2, PI / 2);
+        var sinVal = sin(angle) * amp; //amp = -60
+        var noiseVal = map(noise(sinVal), 0, 1, 0.8, 1.5);
+        var velZ = noiseVal * (sinVal - amp);
+        var noiseForce = createVector(0,0,velZ);
+        p.explode(noiseForce);
+        
+      }
+  }
 }

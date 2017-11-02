@@ -12,6 +12,7 @@ class Particle{
     this.colour = 0;
     
     this.isExploded = false;
+    this.isAttracted = false;
   }
   
   setPos(x,y,z){
@@ -23,11 +24,14 @@ class Particle{
     return this;
   }
   setSize(size){
-    this.size = size;
+    this.size = size;// var pSize = map(bright, 0, 255, 0.1, 2.0);
+    this.mass = map(size, 0, 2, 2.0, 0.0);
     return this;
   }
   getDist(vector){
-    return p5.Vector.dist(this.pos, vector);
+    var distance = p5.Vector.sub(this.pos, vector);
+    return distance;
+    //return p5.Vector.dist(this.pos, vector);
   }
   checkDist(vector){
     if(p5.Vector.dist(this.pos, vector) <= DIST){
@@ -47,8 +51,15 @@ class Particle{
     this.vel = force;
   }
   
+  applyAttraction(attraction){
+    var dir = attraction.sub(this.pos);
+    dir.normalize();
+    dir.mult(0.1 * this.mass);
+    
+    this.applyForce(dir);
+  }
+
   update(){
-   
     if(this.isExploded){
       this.vel.mult(0.7);
       //this.applyForce(createVector(0,0,-1));

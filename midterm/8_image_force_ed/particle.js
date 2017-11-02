@@ -23,11 +23,14 @@ class Particle{
     return this;
   }
   setSize(size){
-    this.size = size;
+    this.size = size;// var pSize = map(bright, 0, 255, 0.1, 2.0);
+    this.mass = map(size, 0, 2, 2.0, 0.0);
     return this;
   }
   getDist(vector){
-    return p5.Vector.dist(this.pos, vector);
+    var distance = p5.Vector.sub(this.pos, vector);
+    return distance;
+    //return p5.Vector.dist(this.pos, vector);
   }
   checkDist(vector){
     if(p5.Vector.dist(this.pos, vector) <= DIST){
@@ -48,12 +51,16 @@ class Particle{
   }
   
   update(){
-   
     if(this.isExploded){
       this.vel.mult(0.7);
-      //this.applyForce(createVector(0,0,-1));
+      this.applyForce(createVector(0,0,-1));
     }
     this.vel.add(this.acc);
+    if(this.vel.mag() == 0){
+      this.vel = createVector(0,0,0);
+    }
+    
+    
     this.pos.add(this.vel);
     this.acc.mult(0);
   }

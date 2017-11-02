@@ -7,7 +7,7 @@ function preload(){
 }
 function setup() {
   createCanvas(600, 765, WEBGL);
-  
+  //img = loadImage("assets/cruz_small.jpg");
   print(img.width + ", " + img.height);
   pixelDensity(1);
   noStroke();
