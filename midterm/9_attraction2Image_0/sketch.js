@@ -47,7 +47,7 @@ function draw() {
       var noiseSinVal, freq1, freq2, noiseAmp;
       freq1 = (frameCount + p.pos.x) * 0.02; //freq = (x+frameCount )* 0.01;//记得加上x，不然没有时间变化感
       freq2 = (frameCount + p.pos.y) * 0.02; //frameCount for animation effect
-      noiseAmp = -40;
+      noiseAmp = -100;
       var noiseVal = noise(freq1, freq2) * noiseAmp;
       var z = noiseVal;
       p.pos.z = z;
