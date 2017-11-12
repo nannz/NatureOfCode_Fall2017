@@ -27,7 +27,7 @@ function setup() {
 }
 
 function draw() {
-  //background(255,5);
+  background(255,5);
   // randomSeed(10);
   var yoff = 0;
   for (var y = 0; y < rows; y++) {
@@ -44,14 +44,14 @@ function draw() {
       flowfield[index] = v;
       
       //draw lines of vectors
-      /*
+      
       push();
       stroke(0,50);
       translate(x * scl, y * scl);
       rotate(v.heading());
       line(0, 0, scl, 0)
       pop();
-      */
+      
       //test grids
       /*test grids
       //noStroke();
