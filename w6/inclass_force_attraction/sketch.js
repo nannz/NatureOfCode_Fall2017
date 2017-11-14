@@ -1,5 +1,5 @@
 "use strict"
-var C_GRAVITY = 20;
+var C_GRAVITY = 70;
 var p1, p2;
 
 function setup() {

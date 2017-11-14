@@ -68,7 +68,7 @@ class Circle {
     if (mode == 0) {
       push();
       translate(this.position.x, this.position.y);
-      rotate(frameCount * this.angleVel + this.angle);
+      //rotate(frameCount * this.angleVel + this.angle);
       noStroke();
       fill(this.circleFill);
        ellipse(this.count, 0, this.dia, this.dia);
