@@ -30,7 +30,8 @@ class Ball{
   }
   
   applyForce(force){
-    force.div(this.mass);
+    //apply copy() to avoid mistakes
+    force.copy().div(this.mass);
     this.acc.add(force);
   }
   
