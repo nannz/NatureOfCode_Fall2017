@@ -14,7 +14,7 @@ function setup() {
   }
   //print(sinArray);
   
-  for(var i = 0; i<50; i++){
+  for(var i = 0; i<5; i++){
     blobs.push(new Blob(random(width), random(height),random(0.6,0.9)));
   }
   noStroke();
@@ -57,9 +57,8 @@ class Particle{
     fill(255,120);
     var dia = this.dia * fastSin(this.angle) * this.distance;
     ellipse(this.pos.x, this.pos.y, dia, dia);
-    ellipse(this.pos.x, this.pos.y, dia + 10, dia + 10);
-    ellipse(this.pos.x, this.pos.y, dia + 15, dia + 15);
-    
+    //ellipse(this.pos.x, this.pos.y, dia + 10, dia + 10);
+    //ellipse(this.pos.x, this.pos.y, dia + 15, dia + 15);
   }
 }
 class Blob{
