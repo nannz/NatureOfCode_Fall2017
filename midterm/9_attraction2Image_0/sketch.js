@@ -21,7 +21,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(600, 765, WEBGL);
+  createCanvas(1280, 720, WEBGL);
 
   pixelDensity(1);
   createParticles(); //for this one and the next one

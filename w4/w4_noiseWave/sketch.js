@@ -1,27 +1,11 @@
-/*
- * @name Noise Wave
- * @description Using Perlin Noise to generate a wave-like pattern.
- * Original by Daniel Shiffman.
- */
-var yoff = 0.0;        // 2nd dimension of perlin noise
-var balls = [];
+var yoff = 0.0; 
 
 function setup() {
-  createCanvas(710, 400);
-  balls[0] = new Ball(width/2, 0);
+  createCanvas(1200, 400);
 }
 
 function draw() {
   background(51);
-  
-  for(var i = 0; i<balls.length; i++){
-    var b = balls[i];
-    
-    b.update();
-    b.display();
-  }
-  
-  
   drawWave();
   
 }
@@ -35,7 +19,7 @@ function drawWave(){
   // Iterate over horizontal pixels
   for (var x = 0; x <= width; x += 10) {
     // Calculate a y value according to noise, map to
-    var y = map(noise(xoff, yoff), 0, 1, 200,300);
+    var y = map(noise(xoff, yoff), 0, 1, 100,300);
     // Set the vertex
     vertex(x, y); 
     // Increment x dimension for noise
